@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Blood Donor Finder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #c0392b;
+    }
+
+    form {
+      max-width: 400px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px gray;
+    }
+
+    select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .donor-card {
+      background-color: white;
+      margin: 15px auto;
+      max-width: 500px;
+      padding: 15px;
+      border-left: 5px solid #c0392b;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .donor-card h3 {
+      margin: 0;
+      color: #2c3e50;
+    }
+
+    .donor-card p {
+      margin: 5px 0;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Blood Donor Finder</h1>
+
+  <form id="searchForm">
+    <label for="bloodGroup">Select Blood Group:</label>
+    <select id="bloodGroup">
+      <option value="A+">A+</option>
+      <option value="A-">A-</option>
+      <option value="B+">B+</option>
+      <option value="B-">B-</option>
+      <option value="O+">O+</option>
+      <option value="O-">O-</option>
+      <option value="AB+">AB+</option>
+      <option value="AB-">AB-</option>
+    </select>
+    <button type="submit">Search Donors</button>
+  </form>
+
+  <div id="donorList"></div>
+
+  <script>
+    const donors = [
+      {
+        name: "Ravi Kumar",
+        bloodGroup: "O+",
+        contact: "9876543210",
+        location: "Chennai",
+        lastDonated: "2025-07-15"
+      },
+      {
+        name: "Divya Sharma",
+        bloodGroup: "A+",
+        contact: "9876501234",
+        location: "Madurai",
+        lastDonated: "2025-06-25"
+      },
+      {
+        name: "Karan Mehta",
+        bloodGroup: "O+",
+        contact: "9998800001",
+        location: "Coimbatore",
+        lastDonated: "2025-05-10"
+      }
+    ];
+
+    document.getElementById("searchForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const selectedGroup = document.getElementById("bloodGroup").value;
+      const donorList = document.getElementById("donorList");
+      donorList.innerHTML = "";
+
+      const matchedDonors = donors.filter(d => d.bloodGroup === selectedGroup);
+
+      if (matchedDonors.length === 0) {
+        donorList.innerHTML = `<p style="text-align:center;">No donors found for ${selectedGroup}</p>`;
+        return;
+      }
+
+      matchedDonors.forEach(donor => {
+        donorList.innerHTML += `
+          <div class="donor-card">
+            <h3>${donor.name}</h3>
+            <p><strong>Blood Group:</strong> ${donor.bloodGroup}</p>
+            <p><strong>Location:</strong> ${donor.location}</p>
+            <p><strong>Last Donated:</strong> ${donor.lastDonated}</p>
+            <p><strong>Contact:</strong> ${donor.contact}</p>
+          </div>
+        `;
+      });
+    });
+  </script>
+
+</body>
+</html>
